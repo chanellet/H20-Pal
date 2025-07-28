@@ -16,14 +16,16 @@ def load_users():
 
 def save_user(username, password):
     with open(user_file, 'a') as file:
-        file.write(f'{username}, {password}\n')
+        file.write(f'{username},{password}\n')
         
 def register_user():
     users = load_users()
+    
     username = input('Input a username: ')
     if username in users:
         print(Fore.RED + 'That username already exists! Please log in or try again.')
         return None
+    
     password = input('Choose a password: ')
     save_user(username, password)
     print('Registered successfully!')

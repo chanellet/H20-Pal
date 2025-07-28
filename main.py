@@ -22,6 +22,8 @@ while not user:
         break
     else:
         print(Fore.RED + 'Invalid option. Try again!')
+if user:
+    print(Fore.GREEN + f'Hello, {user}!')
 
 '''while True:
     print(Fore.BLUE + '\nWhat would you like to do today?')
