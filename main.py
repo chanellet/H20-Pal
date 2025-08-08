@@ -14,30 +14,36 @@ def main():
         print('[2] Register')
         print('[3] Exit')
         choice = input('\nChoose an option: ')
+        
+        #login
         if choice == '1':
             user = login_user()
+            
+        #register    
         elif choice == '2':
             user = register_user()
+        
+        #exit program    
         elif choice == '3':
             print(emojize(Fore.BLUE + '\nStay hydrated! :droplet:'))
-            break
+            return
         else:
             print(Fore.RED + 'Invalid option. Try again!')
     if user:
         print(Fore.GREEN + f'Hello, {user}!') #welcomes user
-        
-    tracker = hydration_tracker()
-    tracker.load_from_file(f'hydration_{user}.txt')
+     
+    #per user file    
+    tracker = hydration_tracker(username=user)
+    tracker.load_from_file()
 
     while True:
         print(Fore.BLUE + '\nWhat would you like to do today?') #main options once logged in
         print('[1] Log water intake')
         print('[2] Set daily goal')
         print('[3] Today\'s total intake')
-        print('[4] Load Logs')
-        print('[5] View history')
-        print('[6] Logout')
-        print('[7] Exit')
+        print('[4] View history')
+        print('[5] Logout')
+        print('[6] Exit')
     
         choice = (input('Please enter a menu number: '))
     
@@ -48,26 +54,29 @@ def main():
                 print(Fore.GREEN + f'Successfully added {amount}mls!')
             except ValueError:
                 print(Fore.RED + 'Unsuccessful! Please add a valid number.')
+                
         elif choice == '2':
             try:
                 new_goal = int(input('Enter new daily hydration goal in mls: '))
                 tracker.set_goal(new_goal)
-                tracker.save_to_file(f'hydration_{user}.txt')
+                tracker.save_to_file()
                 print(Fore.CYAN + f'Goal set to {new_goal}mls')
             except ValueError:
                 print(Fore.RED + 'Please enter a valid number!')
+                
         elif choice == '3':
             total = tracker.total_today()
             print(f'\nTotal today: {total} mls')
+            
         elif choice == '4':
-            tracker.load_from_file(f'hydration_{user}.txt')
-        elif choice == '5':
             tracker.view_history()
-        elif choice == '6':
+            
+        elif choice == '5':
             print(Fore.YELLOW + f'Successfully logged out...')
             print(Fore.LIGHTYELLOW_EX + 'Thank you for using H20 Pal!')
             return main()
-        elif choice == '7':
+        
+        elif choice == '6':
             print(emojize(Fore.BLUE + '\nStay hydrated! :droplet:'))
             break
         else:
