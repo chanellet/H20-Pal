@@ -54,6 +54,15 @@ class hydration_tracker:
         self.entries.append(entry)
         self._append_entry_to_file(entry)
     
+    #delete user entries  
+    def delete_entry(self, listing):
+        if listing < 0 or listing >= len(self.entries):
+            return False
+        self.entries.pop(listing)
+        self._ensure_file()
+        self._write_to_file()
+        return True
+    
     #total amount user has had for the day    
     def total_today(self):
         today = datetime.now().strftime('%Y-%m-%d')
